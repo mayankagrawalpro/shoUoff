@@ -1,0 +1,76 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <h2 class="title">Add Country</h2>
+                        <form class="example-form" [formGroup]="countriesForm">
+                            <mat-form-field class="example-full-width">
+                                <input id="countryname" name="countryname"
+                                    required matInput placeholder="Country Name" [(ngModel)]="countryName" [formControl]="countriesForm.controls['country']" 
+                                >
+                            </mat-form-field>
+                            <div style="color: #F44336" *ngIf="!countriesForm.controls['country'].valid  && countriesForm.controls['country'].touched">
+                                        <div *ngIf="countriesForm.controls['country'].errors.required">
+                                            Please Enter Country Name 
+                                        </div>
+                            </div>
+                        </form>
+                        <div class="Button-Container">
+                            <button [disabled]="!countryName" mat-raised-button data-background-color="blue" (click)="onSubmit()" *ngIf="!editFlag"> Submit</button>
+                            <button [disabled]="!countryName" mat-raised-button data-background-color="blue" (click)="onEditButton()" *ngIf="editFlag"> Edit</button>
+                            <button mat-raised-button data-background-color="blue" (click)="onResetButton()"> Reset </button>
+                        </div>
+                    </div>
+                </div>    
+                <div class="card">
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Countries List</h4>
+                        <p class="category">Registered Countries </p>
+                    </div>
+                    <div class="card-content table-responsive">
+                        <table class="table">
+                            <thead class="text-info">
+                                <tr>
+                                    <th>Sr.No.</th>
+                                    <th>Country Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let country of countriesData| paginate: { itemsPerPage: 5, currentPage: p };let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{country.name}}</td>
+                                    <td >
+                                        <span class="cus-switch">
+                                            <label class="switch m-b-0">
+                                                <input type="checkbox" [(ngModel)]="country.status" 
+                                                [ngModelOptions]="{standalone: true}" (change)="onToggle(country)" >
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </span>
+                                    </td>
+                                    <td class="td-actions text-right">
+                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs" (click)="onEditIcon(country)">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs" (click)="onDeleteIcon(country)">
+                                            <i class="material-icons">delete_forever</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="table-pagination">
+                            <div class="pagination">
+                               <pagination-controls (pageChange)="p = $event"  previousLabel=""  nextLabel="" ></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

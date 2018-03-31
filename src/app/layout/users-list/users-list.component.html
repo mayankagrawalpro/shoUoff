@@ -1,0 +1,77 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <h2 class="title">Search User</h2>
+                        <form class="example-form">
+                            <mat-form-field class="example-full-width">
+                                <i matPrefix class="material-icons search-icon">search</i>
+                                <input matInput placeholder="Search User" type="search" [(ngModel)]="searchInput" (input)="onSearch()" [ngModelOptions]="{standalone: true}">
+                            </mat-form-field>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">User List</h4>
+                        <p class="category">User register from app </p>
+                    </div>
+                    <div class="card-content table-responsive">
+                        <table class="table">
+                            <thead class="text-info">
+                                <tr>
+                                    <th>Sr.No.</th>
+                                    <th>Name</th>
+                                    <th>Nick Name</th>
+                                    <th>School Name</th>
+                                    <th>Email</th>
+                                    <th>Country</th>
+                                    <th>City</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let user of userData| paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{user.first_name}}</td>
+                                    <td>{{user.nick_name}}</td>
+                                    <td>{{user.school_name}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>
+                                        <span *ngIf="user.countryDetails!=null">{{user.countryDetails.name}}</span>
+                                        <span *ngIf="user.countryDetails==null">--</span></td>
+                                    <td >
+                                        <span *ngIf="user.cityDetails!=null">{{user.cityDetails.name}}</span>
+                                        <span *ngIf="user.cityDetails==null">--</span>
+                                    </td>
+                                    <td >
+                                        <span class="cus-switch">
+                                            <label class="switch m-b-0">
+                                                <input type="checkbox" [(ngModel)]="user.status" 
+                                                [ngModelOptions]="{standalone: true}" (change)="onToggle(user)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </span>
+                                    </td>
+                                    <td class="td-actions text-right">
+                                       <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs" (click)="onDeleteIcon(user)">
+                                            <i class="material-icons">delete_forever</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                         <div class="table-pagination">
+                            <div class="pagination">
+                               <pagination-controls (pageChange)="p = $event"  previousLabel=""  nextLabel="" ></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

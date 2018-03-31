@@ -1,0 +1,76 @@
+<div class="main-content login-sec">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 trns">
+            <div class="card-table ">
+                <div class="card " >
+                    <img class ="logo-sec" src="http://frikihubb.com/public/showuoff/admin_photo/shouoff-Logo.png" alt="logo" >
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title" >Admin Login</h4>
+                        <!-- <p class="category">Please login</p> -->
+                    </div>
+                    <div class="card-content" *ngIf="!forgotPassword">
+                        <form  [formGroup]="myFirstForm" novalidate role="form">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <!-- <label class="control-label">Email</label> -->
+                                        <input type="text" matInput  placeholder="Email" [(ngModel)]="loginData.email" name="email" class="form-control input-custom" [formControl]="myFirstForm.controls['email']"  >
+                                             <p style="color: #FF0000"  *ngIf="!myFirstForm.controls['email'].valid  && ( myFirstForm.controls['email'].touched)" >Please provide valid Email ID </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <!-- <label class="control-label" >Password</label> -->
+                                             <input matInput name="pass" type="password" placeholder="Password" [(ngModel)]="loginData.password" class="form-control input-custom"   [formControl]="myFirstForm.controls['password']"  >
+                                             <p style="color: #FF0000"  *ngIf="!myFirstForm.controls['password'].valid  && ( myFirstForm.controls['password'].touched)" >Please provide valid password </p>
+                                    </div>
+                                </div>
+                            </div>
+                         <div class="text-center">
+                            <button type="submit" class="btn btn-danger custom-buttom" data-background-color="blue"  (click)="onLogin()" [disabled]="!myFirstForm.valid">Submit</button> 
+                         </div>
+                        
+                            
+                            <div class="clearfix"></div>
+                        </form>
+                         <div class="text-center">
+                            <button  class="btn btn-danger custom-buttom" data-background-color="blue" (click)="onForgotPassword()">forgot password</button> 
+                         </div>
+                    </div> 
+                    <div *ngIf="forgotPassword">
+                      <div class="card-content">
+                        <form [formGroup]="myForgotForm" novalidate role="form">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <!-- <label class="control-label">Email</label> -->
+                                        <input type="text" placeholder="Email" [(ngModel)]="email" name="email" class="form-control input-custom"  [formControl]="myForgotForm.controls['email']"  >
+                                             <p style="color: #FF0000"  *ngIf="!myForgotForm.controls['email'].valid  && ( myForgotForm.controls['email'].touched)" >Please provide valid Email ID </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                         <div class="text-center">
+                            <button class="btn btn-danger custom-buttom" data-background-color="blue"  (click)="onSubmit()" [disabled]="!myForgotForm.valid">Submit</button> 
+                         </div>
+                        
+                            
+                            <div class="clearfix"></div>
+                        </form>
+                         <div class="text-center">
+                            <button  class="btn btn-danger custom-buttom" data-background-color="blue" (click)="onCancel()">  Cancel  </button> 
+                         </div>
+                     </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

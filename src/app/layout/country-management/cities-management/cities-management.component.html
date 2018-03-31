@@ -1,0 +1,90 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <h2 class="title">Add Cities</h2>
+                        <form class="example-form" [formGroup]="citiesForm">
+                        	<mat-form-field *ngIf="countriesData" class="example-full-width">
+								<mat-select [disabled]="editFlag" id="countryname" name="countryname" placeholder="Country" [(ngModel)]="selectedCountry"   [formControl]="citiesForm.controls['country']" >
+									<mat-option *ngFor="let country of countriesData" [value]="country.name" (click)="onSelectCountry(country.id)">
+									  {{ country.name }}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+							 	<div style="color: #F44336" *ngIf="!citiesForm.controls['country'].valid  && citiesForm.controls['country'].touched">
+                                        <div *ngIf="citiesForm.controls['country'].errors.required">
+                                            Please Enter Country Name 
+                                        </div>
+                                </div>
+                            <mat-form-field class="example-full-width">
+                                <input id="cityName" name="cityName" 
+                                     matInput placeholder="City Name" [(ngModel)]="cityName" [formControl]="citiesForm.controls['city']" 
+                                >
+                            </mat-form-field>
+                            <div style="color: #F44336" *ngIf="!citiesForm.controls['city'].valid  && citiesForm.controls['city'].touched">
+                                        <div *ngIf="citiesForm.controls['city'].errors.required">
+                                            Please Enter City Name 
+                                        </div>
+                                </div>
+                        </form>
+                        <div class="Button-Container">
+                            <button [disabled]="!citiesForm.valid" mat-raised-button data-background-color="blue" (click)="onSubmit()" *ngIf="!editFlag"> Submit</button>
+                            <button [disabled]="!citiesForm.valid" mat-raised-button data-background-color="blue" (click)="onEditButton()" *ngIf="editFlag"> Edit</button>
+                            <button mat-raised-button data-background-color="blue" (click)="onResetButton()"> Reset </button>
+                        </div>
+                    </div>
+                </div>    
+                <div class="card">
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Cities List</h4>
+                        <p class="category">Registered Cities </p>
+                    </div>
+                    <div class="card-content table-responsive">
+                        <table class="table">
+                            <thead class="text-info">
+                                <tr>
+                                    <th>Sr.No.</th>
+                                    <th>Country Name</th>
+                                    <th>City Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let city of citiesData| paginate: { itemsPerPage: 5, currentPage: p };let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{city.countryDetails.name}}</td>
+                                    <td>{{city.name}}</td>
+                                    <td >
+                                        <span class="cus-switch">
+                                            <label class="switch m-b-0">
+                                                <input type="checkbox" [(ngModel)]="city.status" 
+                                                [ngModelOptions]="{standalone: true}" (change)="onToggle(city)" >
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </span>
+                                    </td>
+                                    <td class="td-actions text-right">
+                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs" (click)="onEditIcon(city)">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs" (click)="onDeleteIcon(city)">
+                                            <i class="material-icons">delete_forever</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="table-pagination">
+                            <div class="pagination">
+                               <pagination-controls (pageChange)="p = $event"  previousLabel=""  nextLabel="" ></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
