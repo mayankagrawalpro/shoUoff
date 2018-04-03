@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Inject } from '@angular/core';
 import { AdminService } from '../../services/admin/admin.service'// import admin services
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router'
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
     myFirstForm: FormGroup;
     myForgotForm: FormGroup;
      loginData
-  constructor(private router:Router,private formBuilder: FormBuilder,private adminService:AdminService) { 
+  constructor(private router:Router,private formBuilder: FormBuilder,private adminService:AdminService, public dialog: MatDialog) { 
   	this.loginData={}
 	 this.myFirstForm = this.formBuilder.group({
         'email': [null, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$'), Validators.minLength(10)])],
@@ -46,7 +47,8 @@ export class LoginComponent implements OnInit {
   		if (data.response==true) {
   			this.router.navigate(['/layout'])
   		}else{
-  			alert(JSON.stringify("invalid credential"));
+  		//	alert(JSON.stringify("invalid credential"));
+      this.openDialog()
   		}
   	    }, err =>{
   			console.log(err)
@@ -93,6 +95,34 @@ export class LoginComponent implements OnInit {
 //   			}
   
 
+  openDialog(): void {
+    let dialogRef = this.dialog.open(Confirmation, {
+      width: '700px',
+      height: '350px'
+    //  data: { name: this.name, animal: this.animal }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+     // this.animal = result;
+    });
+  }
+
+}
+
+
+@Component({
+  selector: 'confirmatiions',
+  templateUrl: 'confirmation.html',
+})
+export class Confirmation {
+
+  constructor(
+    public dialogRef: MatDialogRef<Confirmation>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
 }
